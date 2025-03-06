@@ -77,6 +77,11 @@ Note that this procedure does limit the interoperability of the host and is only
 ### Solution 
 Fix for CVE-2023-48795 is released as 	RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130)
 
+| Product | Components | State | Errata 
+| --- | --- | --- | --- |
+| Red Hat Enterprise Linux 9 | openssh | Fixed |		RHSA-2024:1130
+| Red Hat Enterprise Linux 9 | libssh | Fixed |		RHBA-2024:1127
+
 To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
 $ dnf update openssh*
 
@@ -147,6 +152,9 @@ Mitigation for this issue is either not available or the currently available opt
 
 ### Solution 
 Fix for CVE-2023-51385 is released as RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130)
+| Product | Components | State | Errata 
+| --- | --- | --- | --- |
+| Red Hat Enterprise Linux 9 | openssh | Fixed |		RHSA-2024:1130
 
 To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
 $ dnf update openssh*
@@ -189,6 +197,9 @@ If any of the mitigations mentioned above is used, please note that the removal 
 ### Solution
 
 The fix for CVE-2024-6387 has been released as [RHSA-2024:4312](https://access.redhat.com/errata/RHSA-2024:4312) and vulnerability if fixed in openssh version 8.7p1-38.el9_4.1.x86_64.
+| Product | Components | State | Errata 
+| --- | --- | --- | --- |
+| Red Hat Enterprise Linux 9 | openssh | Fixed |		RHSA-2024:4312
 
 To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.1.x86_64.rpm or higher. If already on higher version, you are not affected by the vulnerability. 
 
@@ -251,6 +262,9 @@ The process is identical to CVE-2024-6387, by disabling LoginGraceTime. See that
 
 ### Solution 
 The fix for CVE-2024-6409 has been released as [RHSA-2024:4457](https://access.redhat.com/errata/RHSA-2024:4457) and vulnerability if fixed in openssh version 8.7p1-38.el9_4.4.x86_64.
+| Product | Components | State | Errata 
+| --- | --- | --- | --- |
+| Red Hat Enterprise Linux 9 | openssh | Fixed |	RHSA-2024:4457
 
 To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability. 
 
@@ -261,3 +275,42 @@ For details refer RHSA link [RHSA-2024:4457](https://access.redhat.com/errata/RH
 For details on how to apply this update, which includes the changes described in this advisory, refer to:
 
 https://access.redhat.com/articles/11258
+
+## RHSA-2024:4457
+
+### Synopsis
+Moderate: openssh security update
+
+### Type/Severity
+Security Advisory: Moderate
+
+An update for openssh is now available for Red Hat Enterprise Linux 9.
+
+### Security Fix(es):
+
+openssh: Possible remote code execution due to a race condition in signal handling affecting Red Hat Enterprise Linux 9 (CVE-2024-6409)
+
+### CVEs
+CVE-2024-6409
+
+## CVE-2024-7589
+
+- This does not affect openssh packages on RHEL.
+- This vulnerability is specific to the FreeBSD distribution of OpenSSH.
+
+### Description
+A signal handler in sshd(8) may call a logging function that is not async-signal-safe. The signal handler is invoked when a client does not authenticate within the LoginGraceTime seconds (120 by default). This signal handler executes in the context of the sshd(8)'s privileged code, which is not sandboxed and runs with full root privileges. This issue is another instance of the problem in CVE-2024-6387 addressed by FreeBSD-SA-24:04.openssh. The faulty code in this case is from the integration of blacklistd in OpenSSH in FreeBSD. As a result of calling functions that are not async-signal-safe in the privileged sshd(8) context, a race condition exists that a determined attacker may be able to exploit to allow an unauthenticated remote code execution as root.
+
+### Statement
+This vulnerability is specific to the FreeBSD distribution of OpenSSH. Red Hat Products are not affected.
+
+### Mitigation
+As this does not affect openssh package on RHEL, there is no mitigation applicable. 
+
+### Solution 
+There is no action required as this vulnerability is specific to the FreeBSD distribution of OpenSSH. Red Hat Products are not affected.
+| Product | Components | State | Errata 
+| --- | --- | --- | --- |
+| Red Hat Enterprise Linux 9 | openssh | Not affected	 | N/A 
+
+
