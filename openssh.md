@@ -82,6 +82,10 @@ $ dnf update openssh*
 
 The errata details are available on [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130) referred as RHSA-2024:1130 in short. 
 
+For details on how to apply this update, which includes the changes described in this advisory, refer to:
+
+https://access.redhat.com/articles/11258
+
 ### CVSS v3 Score Breakdown
 |  | Red Hat | NVD |
 | --- | --- | --- |
@@ -152,3 +156,81 @@ The errata details are available on [RHSA-2024:1130](https://access.redhat.com/e
 This errata RHSA-2024:1130 fixes two vulnerabilities : 
 CVE-2023-48795
 CVE-2023-51385
+
+## CVE-2024-6387
+
+- This affects openssh packages on RHEL.
+- A security regression (CVE-2006-5051) was discovered in OpenSSH's server (sshd).
+
+### Description
+A security regression (CVE-2006-5051) was discovered in OpenSSH's server (sshd). There is a race condition which can lead sshd to handle some signals in an unsafe manner. An unauthenticated, remote attacker may be able to trigger it by failing to authenticate within a set time period.
+
+### Statement
+Red Hat rates the severity of this flaw as Important for both Red Hat Enterprise Linux (RHEL) and OpenShift Container Platform (OCP). The most significant risk is Remote Code Execution, however this outcome requires significant resources to exploit. If mitigations are put in place, the consequences of exploitation are reduced. An attacker would then only be able to impact availability of the OpenSSH service.
+
+The main factor preventing a higher impact rating is an unpredictable race condition. All actively supported versions of RHEL (and by extension OCP) have ExecShield (aka ASLR) enabled by default and utilize NX technology, reducing reliability of the attack. Attackers are forced to retry the attack thousands of times. This generates significant noise providing defenders with an opportunity to detect and disrupt potential attacks.
+
+RHEL 9 is the only affected version. RHEL 6, 7, and 8 all utilize an older version of OpenSSH which was never affected by this vulnerability.
+
+### Mitigation
+The below process can protect against a Remote Code Execution attack by disabling the LoginGraceTime parameter on Red Hat Enterprise Linux 9. However, the sshd server is still vulnerable to a Denial of Service if an attacker exhausts all the connections.
+
+1) As root user, open the /etc/ssh/sshd_config
+2) Add or edit the parameter configuration:
+$ vi /etc/ssh/sshd_config
+LoginGraceTime 0
+3) Save and close the file
+4) Restart the sshd daemon:
+$ systemctl restart sshd.service
+Setting LoginGraceTime to 0 disables the SSHD server's ability to drop connections if authentication is not completed within the specified timeout. If this mitigation is implemented, it is highly recommended to use a tool like 'fail2ban' alongside a firewall to monitor log files and manage connections appropriately.
+
+If any of the mitigations mentioned above is used, please note that the removal of LoginGraceTime parameter from sshd_config is not automatic when the updated package is installed.
+
+### Solution
+
+The fix for CVE-2024-6387 has been released as [RHSA-2024:4312](https://access.redhat.com/errata/RHSA-2024:4312) and vulnerability if fixed in openssh version 8.7p1-38.el9_4.1.x86_64.
+
+To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.1.x86_64.rpm or higher. If already on higher version, you are not affected by the vulnerability. 
+
+$ dnf update openssh*
+
+For details refer RHSA link [RHSA-2024:4312](https://access.redhat.com/errata/RHSA-2024:4312).
+
+For details on how to apply this update, which includes the changes described in this advisory, refer to:
+
+https://access.redhat.com/articles/11258
+
+### CVSS v3 Score Breakdown
+|  | Red Hat | NVD |
+| --- | --- | --- |
+| CVSS v3 Base Score | 8.1 | 8.1 |
+| Attack Vector | Network | Network |
+| Attack Complexity | High | High |
+| Privileges Required | None | None |
+| User Interaction | None | None |
+| Scope | Unchanged | Unchanged |
+| Confidentiality Impact | High | High |
+| Integrity Impact | High | High |
+| Availability Impact | High | High |
+
+## RHSA-2024:4312
+
+### Synopsis
+Important: openssh security update
+
+### Type/Severity
+Security Advisory: Important
+
+### Description 
+An update for openssh is now available for Red Hat Enterprise Linux 9.
+
+OpenSSH is an SSH protocol implementation supported by a number of Linux, UNIX, and similar operating systems. It includes the core files necessary for both the OpenSSH client and server.
+
+### Security Fix(es):
+
+openssh: Possible remote code execution due to a race condition in signal handling (CVE-2024-6387)
+
+### CVEs
+CVE-2024-6387
+
+
