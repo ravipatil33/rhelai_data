@@ -70,4 +70,99 @@ For more details on using crypto-policies, please refer to https://access.redhat
 
 Note that this procedure does limit the interoperability of the host and is only suggested as a temporary mitigation until the issue is fully resolved with an update.
 
+Solution 
+Fix for CVE-2023-48795 is released as 	RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link below :
+https://access.redhat.com/errata/RHSA-2024:1130
+
+To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
+
+The errata details are available on https://access.redhat.com/errata/RHSA-2024:1130 referred as RHSA-2024:1130 in short. 
+
+RHSA-2024:1130
+
+Synopsis
+Moderate: openssh security update
+
+Type/Severity
+Security Advisory: Moderate
+
+An update for openssh is now available for Red Hat Enterprise Linux 9.
+
+OpenSSH is an SSH protocol implementation supported by a number of Linux, UNIX, and similar operating systems. It includes the core files necessary for both the OpenSSH client and server.
+
+Security Fix(es):
+
+ssh: Prefix truncation attack on Binary Packet Protocol (BPP) (CVE-2023-48795)
+openssh: potential command injection via shell metacharacters (CVE-2023-51385)
+
+CVEs fixed by RHSA-2024:1130 includes following two CVEs : 
+CVE-2023-48795
+CVE-2023-51385
+
+To install or update the packages, there are two ways, either using 'dnf' utility or by manually downloading the packages from package browser link 'https://access.redhat.com/downloads/content/package-browser' and using rpm to install or update the package. 
+
+
+Backporting security fixes
+- Red Hat use the term backporting to describe when it takes a fix for a security flaw out of the most recent version of an upstream software package, and applies that fix to an older version of the package distributed by Red Hat.
+- Backporting has a number of advantages, but it can create confusion when it is not understood.  For example, stories in the press may include phrases such as "upgrade to Apache httpd 2.0.43 to fix the issue", which only takes into account the upstream version number. This can cause confusion as even after installing updated packages from a vendor, it is not likely to have the latest upstream version, but rather have an older upstream version with backported patches applied.
+
+- Also, some security scanning and auditing tools make decisions about vulnerabilities based solely on the version number of components they find. This results in false positives as the tools do not take into account backported security fixes.
+
+For details on security issues flagged by Nessus reveals false positives refer https://access.redhat.com/solutions/486883
+
+CVSS v3 Score Breakdown
+Red Hat	NVD
+CVSS v3 Base Score
+
+5.9
+
+5.9
+
+Attack Vector
+
+Network
+
+Network
+
+Attack Complexity
+
+High
+
+High
+
+Privileges Required
+
+None
+
+None
+
+User Interaction
+
+None
+
+None
+
+Scope
+
+Unchanged
+
+Unchanged
+
+Confidentiality Impact
+
+None
+
+None
+
+Integrity Impact
+
+High
+
+High
+
+Availability Impact
+
+None
+
+None
 
