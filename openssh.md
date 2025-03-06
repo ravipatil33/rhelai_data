@@ -359,11 +359,14 @@ $ sudo update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48
 One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
 
 ### Validation
+
 To list all supported ciphers by ssh server, there are two alternatives as below :
 
 1. Using nmap
-# nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
+$ nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
 This command lists supported algorithms including key exchange,encryption, MAC, compression algorithms
 
 2. Using sshd command utility
-# sshd -T | egrep "cipher|mac|kexalgorithm"
+$ sshd -T | egrep "cipher|mac|kexalgorithm"
+
+These commands are also used to validate and confirm if sshd configuration vulnerabilities are fixed. 
