@@ -328,7 +328,7 @@ To remove the CBC algorithm from the server for sshd, modify ssh_cipher in /etc/
 ssh_cipher = -AES-128-CBC -AES-256-CBC
 Once done, apply the new policy:
 
-# sudo update-crypto-policies --set DEFAULT:DISABLE-CBC
+$ sudo update-crypto-policies --set DEFAULT:DISABLE-CBC
 For more details, read this solution:
 
 [How to disable specific crypto algorithms when using system-wide cryptographic policies](https://access.redhat.com/articles/7041246)
