@@ -313,4 +313,57 @@ There is no action required as this vulnerability is specific to the FreeBSD dis
 | --- | --- | --- | --- |
 | Red Hat Enterprise Linux 9 | openssh | Not affected	 | N/A 
 
+## Configuration vulnerabilities in openssh
 
+### SSH Server Supports Weak Key Exchange Algorithms
+
+The diffie-hellman-group1-sha1 key exchange algorithm is already disabled in DEFAULT system-wide cryptographic policy in Red Hat Enterprise Linux 8 and 9.
+For more details, read this solution:
+[Steps to disable the diffie-hellman-group1-sha1 algorithm in SSH](https://access.redhat.com/solutions/4278651)
+
+### SSH CBC Mode Ciphers Enabled
+
+To remove the CBC algorithm from the server for sshd, modify ssh_cipher in /etc/crypto-policies/policies/modules/DISABLE-CBC.pmod for Red Hat Enterprise Linux 8 and 9:
+
+ssh_cipher = -AES-128-CBC -AES-256-CBC
+Once done, apply the new policy:
+
+# sudo update-crypto-policies --set DEFAULT:DISABLE-CBC
+For more details, read this solution:
+
+[How to disable specific crypto algorithms when using system-wide cryptographic policies](https://access.redhat.com/articles/7041246)
+
+### SSH Insecure HMAC Algorithms Enabled
+The diffie-hellman-group1-sha1 key exchange algorithm is already disabled in DEFAULT system-wide cryptographic policy in Red Hat Enterprise Linux 8 and 9.
+For more details, read this solution:
+
+[Steps to disable the diffie-hellman-group1-sha1 algorithms in SSH](https://access.redhat.com/solutions/4278651)
+
+### Terrapin Attack (CVE-2023-48795)
+
+You can disable the following ciphers and HMACs as a workaround on Red Hat Enterprise Linux 8 and 9:
+
+chacha20-poly1305@openssh.com
+hmac-sha2-512-etm@openssh.com
+hmac-sha2-256-etm@openssh.com
+hmac-sha1-etm@openssh.com
+hmac-md5-etm@openssh.com
+
+To do that through crypto-policies, put these lines into `/etc/crypto-policies/policies/modules/CVE-2023-48795.pmod`:/
+
+cipher@SSH = -CHACHA20-POLY1305
+ssh_etm = 0
+Once done, apply the new policy:
+
+$ sudo update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48795
+One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
+
+### Validation
+To list all supported ciphers by ssh server, there are two alternatives as below :
+
+1. Using nmap
+# nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
+This command lists supported algorithms including key exchange,encryption, MAC, compression algorithms
+
+2. Using sshd command utility
+# sshd -T | egrep "cipher|mac|kexalgorithm"
