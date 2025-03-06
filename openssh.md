@@ -114,3 +114,11 @@ CVSS v3 Score Breakdown
 |  | Red Hat | NVD |
 | --- | --- | --- |
 | CVSS v3 Base Score | 5.9 | 5.9 |
+| Attack Vector | Network | Network |
+| Attack Complexity | High | High |
+| Privileges Required | None | None |
+| User Interaction | None | None |
+| Scope | Unchanged | Unchanged |
+| Confidentiality Impact | None | None |
+| Integrity Impact | High | High |
+| Availability Impact | None | None |
