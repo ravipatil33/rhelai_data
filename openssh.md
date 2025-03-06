@@ -64,9 +64,10 @@ If "kex-strict-c-v00@openssh.com" is not provided by clients or "kex-strict-s-v0
 5. hmac-md5-etm@openssh.com
 
 To do that through crypto-policies, one can apply a subpolicy with the following content:
-
+```
 cipher@SSH = -CHACHA20-POLY1305
 ssh_etm = 0
+```
 e.g., by putting these lines into `/etc/crypto-policies/policies/modules/CVE-2023-48795.pmod`, applying the resulting subpolicy with `update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48795` and restarting openssh server.
 One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
 
@@ -83,8 +84,9 @@ Fix for CVE-2023-48795 is released as 	RHSA-2024:1130 on 5th March 2024. For det
 | Red Hat Enterprise Linux 9 | libssh | Fixed |		RHBA-2024:1127
 
 To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
+```
 $ dnf update openssh*
-
+```
 The errata details are available on [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130) referred as RHSA-2024:1130 in short. 
 
 For details on how to apply this update, which includes the changes described in this advisory, refer to:
@@ -157,8 +159,9 @@ Fix for CVE-2023-51385 is released as RHSA-2024:1130 on 5th March 2024. For deta
 | Red Hat Enterprise Linux 9 | openssh | Fixed |		RHSA-2024:1130
 
 To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
+```
 $ dnf update openssh*
-
+```
 The errata details are available on [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130) referred as RHSA-2024:1130 in short. 
 
 This errata RHSA-2024:1130 fixes two vulnerabilities : 
@@ -185,11 +188,15 @@ The below process can protect against a Remote Code Execution attack by disablin
 
 1) As root user, open the /etc/ssh/sshd_config
 2) Add or edit the parameter configuration:
+```
 $ vi /etc/ssh/sshd_config
 LoginGraceTime 0
+```
 3) Save and close the file
 4) Restart the sshd daemon:
+```
 $ systemctl restart sshd.service
+```
 Setting LoginGraceTime to 0 disables the SSHD server's ability to drop connections if authentication is not completed within the specified timeout. If this mitigation is implemented, it is highly recommended to use a tool like 'fail2ban' alongside a firewall to monitor log files and manage connections appropriately.
 
 If any of the mitigations mentioned above is used, please note that the removal of LoginGraceTime parameter from sshd_config is not automatic when the updated package is installed.
@@ -202,9 +209,9 @@ The fix for CVE-2024-6387 has been released as [RHSA-2024:4312](https://access.r
 | Red Hat Enterprise Linux 9 | openssh | Fixed |		RHSA-2024:4312
 
 To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.1.x86_64.rpm or higher. If already on higher version, you are not affected by the vulnerability. 
-
+```
 $ dnf update openssh*
-
+```
 For details refer RHSA link [RHSA-2024:4312](https://access.redhat.com/errata/RHSA-2024:4312).
 
 For details on how to apply this update, which includes the changes described in this advisory, refer to:
@@ -267,9 +274,9 @@ The fix for CVE-2024-6409 has been released as [RHSA-2024:4457](https://access.r
 | Red Hat Enterprise Linux 9 | openssh | Fixed |	RHSA-2024:4457
 
 To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability. 
-
+```
 $ dnf update openssh*
-
+```
 For details refer RHSA link [RHSA-2024:4457](https://access.redhat.com/errata/RHSA-2024:4457) 
 
 For details on how to apply this update, which includes the changes described in this advisory, refer to:
@@ -324,11 +331,15 @@ For more details, read this solution:
 ### SSH CBC Mode Ciphers Enabled
 
 To remove the CBC algorithm from the server for sshd, modify ssh_cipher in /etc/crypto-policies/policies/modules/DISABLE-CBC.pmod for Red Hat Enterprise Linux 8 and 9:
-
+```
+$ vi /etc/crypto-policies/policies/modules/DISABLE-CBC.pmod
 ssh_cipher = -AES-128-CBC -AES-256-CBC
+```
 Once done, apply the new policy:
-
+```
 $ sudo update-crypto-policies --set DEFAULT:DISABLE-CBC
+```
+
 For more details, read this solution:
 
 [How to disable specific crypto algorithms when using system-wide cryptographic policies](https://access.redhat.com/articles/7041246)
@@ -350,12 +361,16 @@ hmac-sha1-etm@openssh.com
 hmac-md5-etm@openssh.com
 
 To do that through crypto-policies, put these lines into `/etc/crypto-policies/policies/modules/CVE-2023-48795.pmod`:/
-
+```
+$ vi /etc/crypto-policies/policies/modules/CVE-2023-48795.pmod
 cipher@SSH = -CHACHA20-POLY1305
 ssh_etm = 0
-Once done, apply the new policy:
+```
 
+Once done, apply the new policy:
+```
 $ sudo update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48795
+```
 One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
 
 ### Validation
@@ -363,10 +378,14 @@ One can verify that the changes are in effect by ensuring the ciphers listed abo
 To list all supported ciphers by ssh server, there are two alternatives as below :
 
 1. Using nmap
+```
 $ nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
+```
 This command lists supported algorithms including key exchange,encryption, MAC, compression algorithms
 
 2. Using sshd command utility
+```
 $ sshd -T | egrep "cipher|mac|kexalgorithm"
-
+```
+SSHD should support only strong set of ciphers, protocols and kexalgorithms. 
 These commands are also used to validate and confirm if sshd configuration vulnerabilities are fixed. 
