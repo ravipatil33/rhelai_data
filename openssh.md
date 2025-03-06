@@ -82,6 +82,19 @@ To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86
 
 The errata details are available on https://access.redhat.com/errata/RHSA-2024:1130 referred as RHSA-2024:1130 in short. 
 
+### CVSS v3 Score Breakdown
+|  | Red Hat | NVD |
+| --- | --- | --- |
+| CVSS v3 Base Score | 5.9 | 5.9 |
+| Attack Vector | Network | Network |
+| Attack Complexity | High | High |
+| Privileges Required | None | None |
+| User Interaction | None | None |
+| Scope | Unchanged | Unchanged |
+| Confidentiality Impact | None | None |
+| Integrity Impact | High | High |
+| Availability Impact | None | None |
+
 ## RHSA-2024:1130
 
 ### Synopsis
@@ -105,18 +118,6 @@ CVE-2023-51385
 
 To install or update the packages, there are two ways, either using 'dnf' utility or by manually downloading the packages from package browser link 'https://access.redhat.com/downloads/content/package-browser' and using rpm to install or update the package. 
 
-### CVSS v3 Score Breakdown
-|  | Red Hat | NVD |
-| --- | --- | --- |
-| CVSS v3 Base Score | 5.9 | 5.9 |
-| Attack Vector | Network | Network |
-| Attack Complexity | High | High |
-| Privileges Required | None | None |
-| User Interaction | None | None |
-| Scope | Unchanged | Unchanged |
-| Confidentiality Impact | None | None |
-| Integrity Impact | High | High |
-| Availability Impact | None | None |
 
 ## Backporting security fixes
 - Red Hat use the term backporting to describe when it takes a fix for a security flaw out of the most recent version of an upstream software package, and applies that fix to an older version of the package distributed by Red Hat.
