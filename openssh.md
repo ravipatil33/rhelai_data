@@ -112,4 +112,5 @@ For details on security issues flagged by Nessus reveals false positives refer h
 
 CVSS v3 Score Breakdown
 |  | Red Hat | NVD |
+| --- | --- | --- |
 | CVSS v3 Base Score | 5.9 | 5.9 |
