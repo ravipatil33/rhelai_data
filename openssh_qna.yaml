@@ -1,1 +1,71 @@
+What is SSH ?
+SSH (Secure SHell) is a program for logging into and executing commands on a remote machine. SSH is intended to replace rlogin and rsh, and to provide secure encrypted communications between two untrusted hosts over an insecure network. X11 connections and arbitrary TCP/IP ports can also be forwarded over the secure channel.
+
+What is OpenSSH ?
+OpenSSH is OpenBSD's version of the last free version of SSH, bringing it up to date in terms of security and features.
+This package includes the core files necessary for both the OpenSSH client and server. To make this package useful, you should also install openssh-clients, openssh-server, or both.
+
+What CVEs related to openssh are known to you ?
+As of 6th March 2025, I am aware of following 5 CVEs related to openssh package on RHEL 9. 
+CVE-2023-48795
+CVE-2023-51385
+CVE-2024-6387
+CVE-2024-6409
+CVE-2024-7589
+
+What is CVE-2023-48795 ?
+Vulnerability reported for openssh package on RHEL. A flaw was found in the SSH channel integrity. By manipulating sequence numbers during the handshake, an attacker can remove the initial messages on the secure channel without causing a MAC failure.
+
+What is severity impact of CVE-2023-48795 or terrapin attack vulnerability ?
+This CVE is classified as moderate because the attack requires an active Man-in-the-Middle (MITM) who can intercept and modify the connection's traffic at the TCP/IP layer. The most significant identified impact is that it enables a MITM to delete the SSH2_MSG_EXT_INFO message sent before authentication begins. This allows the attacker to disable a subset of keystroke timing obfuscation features. However, there is no other observable impact on session secrecy or session integrity.
+
+Is there any mitigation or workaround available for RHEL9 for CVE-2023-48795 or terrapin attack vulnerability ?
+Yes, disabling ciphers is possible to mitigate CVE-2023-48795, you can disable the following ciphers and HMACs as a workaround on RHEL-8 and RHEL-9:
+1. chacha20-poly1305@openssh.com
+2. hmac-sha2-512-etm@openssh.com
+3. hmac-sha2-256-etm@openssh.com
+4. hmac-sha1-etm@openssh.com
+5. hmac-md5-etm@openssh.com
+
+To do that through crypto-policies, one can apply a subpolicy with the following content:
+```
+$ vi /etc/crypto-policies/policies/modules/CVE-2023-48795.pmod
+cipher@SSH = -CHACHA20-POLY1305
+ssh_etm = 0
+```
+Once done, apply the new policy:
+```
+$ sudo update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48795
+```
+Note that this procedure does limit the interoperability of the host and is only suggested as a temporary mitigation until the issue is fully resolved with an update.
+
+Q. How to validate if mitigation has been applied and if system is no longer affected to CVE-2023-48795 ?
+One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
+
+Q. What is permanent solution for fix CVE-2023-48795 ?
+- Update openssh packages to latest available or recommended package in errata RHSA-2024:1130 as 8.7p1-34.el9_3.3.x86_64 or higher.
+# dnf update openssh*
+
+Q. Where to find more details on errata or RHSA ?
+For details on fix refer errata link below :
+https://access.redhat.com/errata/RHSA-2024:1130
+
+Q. Is openssh version installed on my system affected by CVE-2023-48795 ?
+If installed package (check using 'rpm -qa | grep openssh') on system is lower than recommended in RHSA-2024:1130 as 8.7p1-34.el9_3.3 on architecture x86_64. Please check package version of openssh installed or upload installed-rpms file on here to validate if your system is affected ?
+
+Q. What CVEs are fixed by RHSA-2024:1130 ?
+CVEs fixed by RHSA-2024:1130 includes following two CVEs : 
+CVE-2023-48795
+CVE-2023-51385
+
+Q. Can vulnerability scanner report CVE-2023-48795 as false positive vulnerability ?
+Red Hat follows backporting policy (https://access.redhat.com/solutions/57665), Red Hat use the term backporting to describe when it takes a fix for a security flaw out of the most recent version of an upstream software package, and applies that fix to an older version of the package distributed by Red Hat. Hence to be sure that there is no false positive, make sure that installed package is one shipped by Red Hat and you are not using community version of the package. 
+
+Q. How to check supported set of ciphers, macs and kexalgorithms in sshd ?
+To list all supported ciphers by ssh server, there are two alternatives as below :
+1. Using nmap
+$ nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
+This command lists supported algorithms including key exchange,encryption, MAC, compression algorithms
+2. Using sshd command utility
+$ sshd -T | egrep "cipher|mac|kexalgorithm"
 
