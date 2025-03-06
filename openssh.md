@@ -233,4 +233,31 @@ openssh: Possible remote code execution due to a race condition in signal handli
 ### CVEs
 CVE-2024-6387
 
+## CVE-2024-6409
 
+- This affects openssh packages on RHEL.
+- A race condition vulnerability was discovered in how signals are handled by OpenSSH's server (sshd)
+
+### Description
+A race condition vulnerability was discovered in how signals are handled by OpenSSH's server (sshd). If a remote attacker does not authenticate within a set time period, then sshd's SIGALRM handler is called asynchronously. However, this signal handler calls various functions that are not async-signal-safe, for example, syslog(). As a consequence of a successful attack, in the worst case scenario, an attacker may be able to perform a remote code execution (RCE) as an unprivileged user running the sshd server.
+
+### Statement
+Red Hat rates the severity of this flaw as Moderate for both Red Hat Enterprise Linux (RHEL) and OpenShift Container Platform (OCP). While there are many similarities to CVE-2024-6387, the important difference is that any possible remote code execution is limited to an unprivileged child of the SSHD server. This additional restriction on access reduces the overall security impact.
+
+This vulnerability only affects the versions of OpenSSH shipped with Red Hat Enterprise Linux 9. Upstream versions of sshd are not impacted by this flaw.
+
+### Mitigation
+The process is identical to CVE-2024-6387, by disabling LoginGraceTime. See that CVE page for additional details.
+
+### Solution 
+The fix for CVE-2024-6409 has been released as [RHSA-2024:4457](https://access.redhat.com/errata/RHSA-2024:4457) and vulnerability if fixed in openssh version 8.7p1-38.el9_4.4.x86_64.
+
+To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability. 
+
+$ dnf update openssh*
+
+For details refer RHSA link [RHSA-2024:4457](https://access.redhat.com/errata/RHSA-2024:4457) 
+
+For details on how to apply this update, which includes the changes described in this advisory, refer to:
+
+https://access.redhat.com/articles/11258
