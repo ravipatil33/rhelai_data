@@ -10,7 +10,7 @@ Red Hat has several products in its portfolio.
 2. Red Hat OpenShift - Quickly build and deploy applications at scale, while you modernize the ones you already have.
 3. Red Hat Ansible Automation Platform - Create, manage, and dynamically scale automation across your entire enterprise.
 
-Explore all Red Hat products by visiting https://www.redhat.com/en/technologies/all-products?intcmp=7013a000003Sl5EAAS
+Explore all Red Hat products by visiting [Red Hat Products](https://www.redhat.com/en/technologies/all-products?intcmp=7013a000003Sl5EAAS)
 
 This document is for Common Vulnerabilities Exposures (CVEs) related to 'openssh' and other packages on RHEL platform, which is enterprise level, open source operating system by Red Hat. 
 
@@ -70,17 +70,16 @@ ssh_etm = 0
 e.g., by putting these lines into `/etc/crypto-policies/policies/modules/CVE-2023-48795.pmod`, applying the resulting subpolicy with `update-crypto-policies --set $(update-crypto-policies --show):CVE-2023-48795` and restarting openssh server.
 One can verify that the changes are in effect by ensuring the ciphers listed above are missing from both `/etc/crypto-policies/back-ends/openssh.config` and `/etc/crypto-policies/back-ends/opensshserver.config`.
 
-For more details on using crypto-policies, please refer to https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening
+For more details on using crypto-policies, please refer to [System wide cryptographic policies in RHEL 9](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening)
 
 Note that this procedure does limit the interoperability of the host and is only suggested as a temporary mitigation until the issue is fully resolved with an update.
 
 ### Solution 
-Fix for CVE-2023-48795 is released as 	RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link below :
-https://access.redhat.com/errata/RHSA-2024:1130
+Fix for CVE-2023-48795 is released as 	RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130)
 
 To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
 
-The errata details are available on https://access.redhat.com/errata/RHSA-2024:1130 referred as RHSA-2024:1130 in short. 
+The errata details are available on [RHSA-2024:1130](https://access.redhat.com/errata/RHSA-2024:1130) referred as RHSA-2024:1130 in short. 
 
 ### CVSS v3 Score Breakdown
 |  | Red Hat | NVD |
@@ -116,7 +115,7 @@ CVEs fixed by RHSA-2024:1130 includes following two CVEs :
 CVE-2023-48795
 CVE-2023-51385
 
-To install or update the packages, there are two ways, either using 'dnf' utility or by manually downloading the packages from package browser link 'https://access.redhat.com/downloads/content/package-browser' and using rpm to install or update the package. 
+To install or update the packages, there are two ways, either using 'dnf' utility or by manually downloading the packages from package browser link for [package browser](https://access.redhat.com/downloads/content/package-browser) and using rpm to install or update the package. 
 
 
 ## Backporting security fixes
@@ -125,4 +124,4 @@ To install or update the packages, there are two ways, either using 'dnf' utilit
 
 - Also, some security scanning and auditing tools make decisions about vulnerabilities based solely on the version number of components they find. This results in false positives as the tools do not take into account backported security fixes.
 
-For details on security issues flagged by Nessus reveals false positives refer https://access.redhat.com/solutions/486883
+For details on [security issues flagged by Nessus reveals false positives](https://access.redhat.com/solutions/486883)
