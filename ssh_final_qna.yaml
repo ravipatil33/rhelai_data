@@ -102,6 +102,6 @@ seed_examples:
           There is no action required for CVE-2024-7589 as this vulnerability is specific to the FreeBSD distribution of OpenSSH. Red Hat Products are not affected.
 document:
   repo: https://github.com/ravipatil33/rhelai_data
-  commit: 914846468fe6f454a6f9d6aad72d173ec9792e93
+  commit: 938b438816bd10fb67cbf5773de19d4b63ca9f5e
   patterns:
-    - openssh.md
+    - ssh_data.md
