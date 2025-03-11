@@ -14,7 +14,7 @@ seed_examples:
           For which package vulnerabilities CVE-2023-48795, CVE-2023-51385,
           CVE-2024-6387, CVE-2024-6409 and CVE-2024-7589 are reported ?
         answer: >-
-        These vulnerabilities are related to openssh package on RHEL system. 
+          These vulnerabilities are related to openssh package on RHEL system. 
       - question: Are vulnerabilities related to openssh important ?
         answer: >-
           Yes, vulnerabilities related to openssh package are important as it
