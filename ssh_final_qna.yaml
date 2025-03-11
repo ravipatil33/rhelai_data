@@ -2,69 +2,28 @@ created_by: ravipatil
 version: 3
 domain: Security
 document_outline: >-
-  This has details of 5 vulnerabilities or CVEs reported for openssh package in
-  RHEL 9 in last one year. RHEL AI is expected to use this document and generate
-  sample question and answers for other vulnerabilities
+  This document is for Common Vulnerabilities Exposures (CVEs) related to openssh. Here we have details for following CVEs related to openssh package on RHEL 9 : CVE-2023-48795, CVE-2023-51385, CVE-2024-6387, CVE-2024-6409, CVE-2024-7589.
 seed_examples:
   - context: >-
-      SSH stands for Secure SHell and is a program for logging into remote
-      system securely and also allows file transfer operations. This has several
-      authentication mechanism supported. OpenSSH is OpenBSD's version of the
-      last free version of SSH. The openssh is package shipped on RHEL 9.
+      The openssh package is pre-installed on RHEL system. Here we have details for following CVEs related to openssh package on RHEL 9 : CVE-2023-48795, CVE-2023-51385, CVE-2024-6387, CVE-2024-6409, CVE-2024-7589.
     questions_and_answers:
-      - question: |
-          What is SSH ?
+      - question: List CVEs related to openssh on RHEL 9 ?
         answer: >-
-          SSH (Secure SHell) is a program for logging into and executing
-          commands on a remote machine. SSH is intended to replace rlogin and
-          rsh, and to provide secure encrypted communications between two
-          untrusted hosts over an insecure network.
-      - question: What is OpenSSH ?
-        answer: >-
-          OpenSSH is OpenBSD's version of the last free version of SSH, bringing
-          it up to date in terms of security and features. This package includes
-          the core files necessary for both the OpenSSH client and server.
-      - question: What packages are available with openssh ?
-        answer: >-
-          There are mainly 3 packages : openssh, openssh-server and
-          openssh-clients. You can list using rpm command 'rpm -qa | grep
-          openssh'.
-  - context: >-
-      There are several CVEs reported for openssh. We will target only 5 CVEs
-      here including, CVE-2023-48795, CVE-2023-51385, CVE-2024-6387,
-      CVE-2024-6409
-
-      and CVE-2024-7589.
-    questions_and_answers:
-      - question: What CVEs related to openssh are known to you as per fine-tuning ?
-        answer: >-
-          As of 6th March 2025, I am fine-tuned with details of following 5 CVEs
-          related to openssh package on RHEL 9.
-
-          CVE-2023-48795
-
-          CVE-2023-51385
-
-          CVE-2024-6387
-
-          CVE-2024-6409
-
-          CVE-2024-7589
+          As of 6th March 2025, I am fine-tuned with details of following 5 CVEsrelated to openssh package on RHEL 9 as CVE-2023-48795, CVE-2023-51385, CVE-2024-6387, CVE-2024-6409 and CVE-2024-7589
       - question: >-
           For which package vulnerabilities CVE-2023-48795, CVE-2023-51385,
           CVE-2024-6387, CVE-2024-6409 and CVE-2024-7589 are reported ?
-        answer: 'These vulnerabilities are related to openssh package on RHEL system. '
+        answer: >-
+        These vulnerabilities are related to openssh package on RHEL system. 
       - question: Are vulnerabilities related to openssh important ?
         answer: >-
           Yes, vulnerabilities related to openssh package are important as it
           involves secure login to the systems, and if its affected, there is
           high risk of unauthorized access to the secure system.
   - context: >
-      The vulnerability or CVE CVE-2023-48795 is also referred to as terrapin
-      attack. This affects openssh packages on RHEL. A flaw was found in the SSH
-      channel integrity. By manipulating sequence numbers during the handshake,
-      an attacker can remove the initial messages on the secure channel without
-      causing a MAC failure.
+      The vulnerability or CVE-2023-48795 is also referred to as terrapin attack. 
+      CVE-2023-48795 affects openssh packages on RHEL. A flaw was found in the SSH channel integrity. 
+      By manipulating sequence numbers during the handshake, an attacker can remove the initial messages on the secure channel without causing a MAC failure. 
     questions_and_answers:
       - question: What is CVE-2023-48795 ?
         answer: >-
@@ -79,64 +38,68 @@ seed_examples:
           delete the SSH2_MSG_EXT_INFO message sent before authentication
           begins. This allows the attacker to disable a subset of keystroke
           timing obfuscation features.
-      - question: What is mitigation for CVE-2023-48795 ?
+      - question: What is solution for CVE-2023-48795 ?
         answer: >-
-          You can disable affected ciphers and HMACs as a workaround on RHEL-8
-          and RHEL-9. You can apply a subpolicy to disable CHACHA20-POLY1305
-          cipher and set ssh_etm=0.
+          To fix vulnerability CVE-2023-48795, update the openssh package to version 8.7p1-34.el9_3.3.x86_64 using $ dnf update openssh.
   - context: >-
-      An update for openssh is now available for Red Hat Enterprise Linux 9 as
-      RHSA-2024:1130 which fixes two vulnerabilities CVE-2023-48795 and
-      CVE-2023-51385. The fix is included in version 8.7p1-34.el9_3.3.x86_64 of
-      openssh.
+      CVE-2023-51385 affects openssh packages on RHEL. A remote attacker may be able to execute arbitrary OS commands by using expansion tokens, such as %u or %h. 
     questions_and_answers:
       - question: >-
-          Which package version includes fix for CVE-2023-48795 and
-          CVE-2023-51385 ?
+          What is statement for CVE-2023-51385 ?
         answer: >-
-          Fix for CVE-2023-48795 and CVE-2023-51385 is released as
-          RHSA-2024:1130 on 5th March 2024. For details on fix refer errata link
-          https://access.redhat.com/errata/RHSA-2024:1130. You must have this or
-          higher package version to fix the vulnerability.
-      - question: What is the state of CVE-2023-48795 for openssh component ?
+          The ability to execute OS commands is dependent on what quoting is present in the user-supplied ssh_config directive. However, it is generally the users responsibility to validate arguments passed to SSH.
+      - question: What is the mitigation for CVE-2023-51385 ?
         answer: >-
-          CVE-2023-48795 has state as 'Fixed' with errata as RHSA-2024:1130. You
-          are requested to apply this errata on the system using dnf command
-          'dnf update openssh*'.
-      - question: What CVEs are fixed by RHSA-2024:1130 ?
+          Mitigation for CVE-2023-51385 either not available or the currently available.
+      - question: How to fix vulnerability CVE-2023-51385 ?
         answer: >-
-          CVEs fixed by RHSA-2024:1130 includes following two CVEs :
-          CVE-2023-48795 CVE-2023-51385
+          To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
+          $ dnf update openssh
   - context: >-
-      SSH is mainly affected by configuration vulnerabilities which includes :
-      Weak Key Exchange Algorithms, CBC Mode Ciphers Enabled, Insecure HMAC
-      Algorithms and Terrapin Attack, which can be fixed by updating
-      configuration for MACs, Ciphers and KexAlgorithms for sshd server.
+      CVE-2024-6387 affects openssh packages on RHEL. A security regression (CVE-2006-5051) was discovered in OpenSSH's server (sshd).
     questions_and_answers:
-      - question: How to fix vulnerability 'CBC Mode Ciphers Enabled' for openssh ?
+      - question: Explain CVE-2024-6387 briefly ?
         answer: |-
-          To remove the CBC algorithm using sub-policy.
-          $ vi /etc/crypto-policies/policies/modules/DISABLE-CBC.pmod
-          ssh_cipher = -AES-128-CBC -AES-256-CBC
-          Then update policy to include sub-policy.
-          $ sudo update-crypto-policies --set DEFAULT:DISABLE-CBC
-      - question: 'Q. How to list all supported parameters in sshd ? '
+          A security regression (CVE-2006-5051) was discovered in OpenSSH server (sshd). There is a race condition which can lead sshd to handle some signals in an unsafe manner. An unauthenticated, remote attacker may be able to trigger it by failing to authenticate within a set time period.
+      - question: What RHEL versions are affected by CVE-2024-6387 ?
         answer: >-
-          To list all supported ciphers by ssh server, there are two
-          alternatives as below :
-
-          Using nmap : $ nmap --script ssh2-enum-algos -sV -p 22 127.0.0.1
-
-          Using sshd command utility : $ sshd -T | egrep
-          "cipher|mac|kexalgorithm"
-      - question: How to apply new or sub-policy using cryptographic policy in RHEL ?
+          RHEL 9 is the only affected version. RHEL 6, 7, and 8 all utilize an older version of OpenSSH which was never affected by this vulnerability.
+      - question: List steps to mitigate CVE-2024-6387 on RHEL 9 ?  
         answer: >-
-          Define sub-policy and add parameters.
-
-          Then apply sub-policy using command similar to below.
-
-          $ sudo update-crypto-policies --set $(update-crypto-policies
-          --show):sub-policy-name-here-in-capitals
+          1. As root user, open the /etc/ssh/sshd_config. 
+          2. Add or edit the parameter configuration:
+                $ vi /etc/ssh/sshd_config
+                  LoginGraceTime 0
+          3) Save and close the file
+          4) Restart the sshd daemon:
+                $ systemctl restart sshd.service
+  - context: >-
+      CVE-2024-6409 affects openssh packages on RHEL. A race condition vulnerability was discovered in how signals are handled by OpenSSH server (sshd)
+    questions_and_answers:
+      - question: >-
+          Can you describe CVE-2024-6409 ?
+        answer: >-
+          A race condition vulnerability was discovered in how signals are handled by OpenSSH server (sshd). If a remote attacker does not authenticate within a set time period, then sshd SIGALRM handler is called asynchronously. However, this signal handler calls various functions that are not async-signal-safe, for example, syslog(). As a consequence of a successful attack, in the worst case scenario, an attacker may be able to perform a remote code execution (RCE) as an unprivileged user running the sshd server.
+      - question: Does CVE-2024-6409 affects upstream versions of sshd ?
+        answer: >-
+          CVE-2024-6409 vulnerability only affects the versions of OpenSSH shipped with Red Hat Enterprise Linux 9. Upstream versions of sshd are not impacted by this flaw.
+      - question: What is solution to fix vulnerability CVE-2024-6409 ?
+        answer: >-
+          To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability. 
+          $ dnf update openssh
+  - context: >-
+      CVE-2024-7589 does not affect openssh packages on RHEL. CVE-2024-7589 vulnerability is specific to the FreeBSD distribution of OpenSSH.
+    questions_and_answers:
+      - question: >-
+          What is description for CVE-2024-7589 ?
+        answer: >-
+          A signal handler in sshd(8) may call a logging function that is not async-signal-safe. The signal handler is invoked when a client does not authenticate within the LoginGraceTime seconds (120 by default). A race condition exists that a determined attacker may be able to exploit to allow an unauthenticated remote code execution as root.
+      - question: Is CVE-2024-7589 affecting Red Hat Products ?
+        answer: >-
+          CVE-2024-7589 vulnerability is specific to the FreeBSD distribution of OpenSSH. Red Hat Products are not affected.
+      - question: What is solution to fix vulnerability CVE-2024-7589 ?
+        answer: >-
+          There is no action required for CVE-2024-7589 as this vulnerability is specific to the FreeBSD distribution of OpenSSH. Red Hat Products are not affected.
 document:
   repo: https://github.com/ravipatil33/rhelai_data
   commit: 914846468fe6f454a6f9d6aad72d173ec9792e93
