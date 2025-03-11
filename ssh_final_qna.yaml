@@ -14,16 +14,16 @@ seed_examples:
           For which package vulnerabilities CVE-2023-48795, CVE-2023-51385,
           CVE-2024-6387, CVE-2024-6409 and CVE-2024-7589 are reported ?
         answer: >-
-          These vulnerabilities are related to openssh package on RHEL system. 
+          These vulnerabilities are related to openssh package on RHEL system.
       - question: Are vulnerabilities related to openssh important ?
         answer: >-
           Yes, vulnerabilities related to openssh package are important as it
           involves secure login to the systems, and if its affected, there is
           high risk of unauthorized access to the secure system.
   - context: >
-      The vulnerability or CVE-2023-48795 is also referred to as terrapin attack. 
-      CVE-2023-48795 affects openssh packages on RHEL. A flaw was found in the SSH channel integrity. 
-      By manipulating sequence numbers during the handshake, an attacker can remove the initial messages on the secure channel without causing a MAC failure. 
+      The vulnerability or CVE-2023-48795 is also referred to as terrapin attack.
+      CVE-2023-48795 affects openssh packages on RHEL. A flaw was found in the SSH channel integrity.
+      By manipulating sequence numbers during the handshake, an attacker can remove the initial messages on the secure channel without causing a MAC failure.
     questions_and_answers:
       - question: What is CVE-2023-48795 ?
         answer: >-
@@ -42,7 +42,7 @@ seed_examples:
         answer: >-
           To fix vulnerability CVE-2023-48795, update the openssh package to version 8.7p1-34.el9_3.3.x86_64 using $ dnf update openssh.
   - context: >-
-      CVE-2023-51385 affects openssh packages on RHEL. A remote attacker may be able to execute arbitrary OS commands by using expansion tokens, such as %u or %h. 
+      CVE-2023-51385 affects openssh packages on RHEL. A remote attacker may be able to execute arbitrary OS commands by using expansion tokens, such as %u or %h.
     questions_and_answers:
       - question: >-
           What is statement for CVE-2023-51385 ?
@@ -53,7 +53,7 @@ seed_examples:
           Mitigation for CVE-2023-51385 either not available or the currently available.
       - question: How to fix vulnerability CVE-2023-51385 ?
         answer: >-
-          To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64. 
+          To fix vulnerability, update the openssh package to version 8.7p1-34.el9_3.3.x86_64.
           $ dnf update openssh
   - context: >-
       CVE-2024-6387 affects openssh packages on RHEL. A security regression (CVE-2006-5051) was discovered in OpenSSH's server (sshd).
@@ -64,9 +64,9 @@ seed_examples:
       - question: What RHEL versions are affected by CVE-2024-6387 ?
         answer: >-
           RHEL 9 is the only affected version. RHEL 6, 7, and 8 all utilize an older version of OpenSSH which was never affected by this vulnerability.
-      - question: List steps to mitigate CVE-2024-6387 on RHEL 9 ?  
+      - question: List steps to mitigate CVE-2024-6387 on RHEL 9 ?
         answer: >-
-          1. As root user, open the /etc/ssh/sshd_config. 
+          1. As root user, open the /etc/ssh/sshd_config.
           2. Add or edit the parameter configuration:
                 $ vi /etc/ssh/sshd_config
                   LoginGraceTime 0
@@ -85,7 +85,7 @@ seed_examples:
           CVE-2024-6409 vulnerability only affects the versions of OpenSSH shipped with Red Hat Enterprise Linux 9. Upstream versions of sshd are not impacted by this flaw.
       - question: What is solution to fix vulnerability CVE-2024-6409 ?
         answer: >-
-          To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability. 
+          To fix vulnerability, update openssh package to version 8.7p1-38.el9_4.4.x86_64 or higher. If already on higher version, you are not affected by the vulnerability.
           $ dnf update openssh
   - context: >-
       CVE-2024-7589 does not affect openssh packages on RHEL. CVE-2024-7589 vulnerability is specific to the FreeBSD distribution of OpenSSH.
