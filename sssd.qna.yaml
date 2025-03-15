@@ -1,0 +1,142 @@
+created_by: rhel_ai_team
+version: 3
+domain: sssd
+document_outline: This files contain information related to sssd.
+seed_examples:
+  - context: >-
+      SSSD is an acronym for System Security Services Daemon. It is the client
+      component of centralized identity management solutions such as FreeIPA,
+      389 Directory Server, Microsoft Active Directory, OpenLDAP and other
+      directory servers. The client serves and caches the information stored in
+      the remote directory server and provides identity, authentication and
+      authorization services to the host machine. SSSD provides two major
+      features: obtaining information about LDAP users, authenticating LDAP user
+    questions_and_answers:
+      - question: What is sssd?
+        answer: >-
+          SSSD is an acronym for System Security Services Daemon. It is the
+          client component of centralized identity management solutions such as
+          FreeIPA, 389 Directory Server, Microsoft Active Directory, OpenLDAP
+          and other directory servers.
+      - question: What are the main features of sssd?
+        answer: >-
+          SSSD provides two major features - obtaining information about LDAP
+          users and authenticating LDAP users.
+      - question: Why do you need SSSD?
+        answer: To leverage centralize authentication mechanism.
+  - context: >-
+      SSSD provides two major features - obtaining information about users and
+      authenticating users. However, a successful authentication can only be
+      performed when the information about a user can be retrieved, so if
+      authentication doesn work in your case, please make sure you can at
+      least obtain info from about the user with getent passwd $user and id.
+      Each SSSD process is represented by a section in the sssd.conf config
+      file. To enable debugging persistently across SSSD service restarts, put
+      the
+    questions_and_answers:
+      - question: What is the config file for sssd?
+        answer: >-
+          Each SSSD process is represented by a section in the sssd.conf config
+          file.
+      - question: How to troubleshoot sssd issue?
+        answer: >-
+          To troubleshoot sssd issues enable debugging persistently across SSSD
+          service restarts, put the directive debug_level=N, where N typically
+          stands for a number between 1 and 10 into the particular section.
+      - question: Where sssd logs are getting stored?
+        answer: ssd logs are stored inside /var/log/sssd
+  - context: >-
+      Troubleshooting sssd start up issues. If you failed to start sssd process
+      you need to start the sssd in debug mode. Typically `sssd -i d7` command
+      will show you why sssd is failing to start. Some common causes where sssd
+      can fail to start if the sssd.conf permission is not correct. Check the
+      content of sssd.conf check if you have any typos in sssd.conf.
+    questions_and_answers:
+      - question: How to troubleshoot sssd start up issues?
+        answer: >-
+          Start sssd in debug mode `sssd -i d7` it will show you why sssd is
+          failing to start
+      - question: How can I validate sssd.conf
+        answer: Use sssctl-config check.
+      - question: Why sssd is failing to start
+        answer: >-
+          Start sssd in debug mode using `sssd -i d7` also, check the permission
+          of sssd.conf it should be 600 and owned by root. You can use
+          `journalctl -u sssd.service --no-pager` to check why sssd is failing
+          to start.
+  - context: >-
+      Troubleshooting LDAP user login issues using sssd. If you are failed to
+      login with sssd first try to check if you can lookup the LDAP user using
+      id ldapuser if it fails enable sssd debugging by adding debug_level =9
+      under all section of the sssd.conf and restart sssd and reproduce the
+      issue post reproducing the issue check /var/log/sssd. If the logins take
+      too long or the time to execute id $username takes too long. First, make
+      sure to understand what does id username do. Do you really care abou
+    questions_and_answers:
+      - question: I  am facing slowness while login using LDAP user.
+        answer: >-
+          you can use ignore_group_member = false under the `[$domain]`
+          section of sssd.conf Normally the most data-intensive operation is
+          downloading the groups including their members.
+      - question: id lookup takes long time for AD user.
+        answer: >-
+          you can use `ignore_group_member = false` under the `[$domain]`
+          section of sssd.conf Normally the most data-intensive operation is
+          downloading the groups including their members.
+      - question: What is the consequence of `ignore_group_members = true`
+      
+        answer: >-
+          Setting the ignore_group_members option to True makes all groups
+          appear as empty, thus downloading only information about the group
+          objects themselves and not their members, providing a significant
+          performance boost.
+  - context: >-
+      Troubleshoot sssd failure or failed to start sssd involves several steps
+      first try to start sssd in debug mode using `sssd -i d7`. Some comon issue
+      related to sssd start up involves `krb5_kt_start_seq_get failed: Key table
+      file /etc/krb5.keytab not found` which indicates the keytab file is
+      absent. Check using `klist -kte` if you have the keytab file.
+      `sssd.service: main process exited, code=exited, status=4/NOPERMISSION`
+      indicates sssd is failing to start due to permission issues
+    questions_and_answers:
+      - question: Unable to start sssd?
+        answer: Try to start sssd in debug mode using `sssd -i d7`
+      - question: krb5_kt_start_seq_get failed
+        answer: >-
+          krb5_kt_start_seq_get failed Key table file /etc/krb5.keytab not
+          found` which indicates the keytab file is absent. Check using `klist
+          -kte`
+      - question: sssd.service main process exited status=4/NOPERMISSION
+        answer: >-
+          `sssd.service: main process exited, code=exited,
+          status=4/NOPERMISSION` indicates sssd is failing to start due to
+          permission issues check if you have proper permisison set on sssd.conf
+          it should be owned by root and permission should be 600.
+  - context: >-
+      Integrate a linux machine with Active Directory using `adcli` or `realmd`
+      to integrate a Linux machine with AD the command is `realm join
+      domain_name -U aduser`. If you are failing to integrate a linux machine
+      with active directory then enable verbosity using `realm join domain_name
+      -U aduser -vvv`. When troubleshooting AD join issues alternatively try
+      using --membership-software=samba or adcli and compare which provides
+      better error msg.
+    questions_and_answers:
+      - question: How can I join a machine to active directory using sssd.
+        answer: >-
+          Integrate a linux machine with Active Directory using `adcli` or
+          `realmd` to integrate a Linux machine with AD the command is `realm
+          join domain_name -U aduser`
+      - question: How can I troubleshoot AD join issues
+        answer: >-
+          If you are failing to integrate a linux machine with active directory
+          then enable verbosity using `realm join domain_name -U aduser -vvv`.
+          Refer to https://access.redhat.com/articles/7075917
+      - question: Failed to join AD domain
+        answer: >-
+          For issues related to AD join refer to
+          https://access.redhat.com/articles/7075917
+document:
+  repo: https://github.com/Roy214/RHEL-AI-KCS/
+  commit: 956cc4d210b30fd8cd3843ce035fbc13ab2449f7
+  patterns:
+    - sssd.md
