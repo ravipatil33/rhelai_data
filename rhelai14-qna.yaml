@@ -97,9 +97,7 @@ seed_examples:
       - question: What is Granite ?
         answer: >-
           An open source (Apache 2.0) Large Language Model trained by IBM. On
-          RHEL AI you can download
-
-          the granite-7b-starter model as a base LLM for customizing.
+          RHEL AI you can download the granite-7b-starter model as a base LLM for customizing.
       - question: What are the Python Libraries used in RHEL AI ?
         answer: >-
           PyTorch : An optimized tensor library for deep learning on GPUs and
