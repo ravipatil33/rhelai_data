@@ -107,7 +107,7 @@ seed_examples:
           for LLMs and FSDP : An acronym for Fully Shared Data Parallels used
           for training and fine-tuning.
 document:
-  repo: https://github.com/ravipatil33/taxonomy-knowledge-docs
-  commit: c833bfa7eb6cc2b2cd893daaf87ec63b6e596e49
+  repo: https://github.com/ravipatil33/rhelai_data
+  commit: b63aae4a968ab584f3f4ab2adf6525efc9396287
   patterns:
-    - rhelai1.2_gs-20241126T090854692.md
+    - rhelai14.pdf
