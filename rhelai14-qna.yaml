@@ -106,6 +106,6 @@ seed_examples:
           for training and fine-tuning.
 document:
   repo: https://github.com/ravipatil33/rhelai_data
-  commit: b63aae4a968ab584f3f4ab2adf6525efc9396287
+  commit: 1968b6b075fa74dd7300c5624420d23765f1008c
   patterns:
     - rhelai14.md
